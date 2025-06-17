@@ -7,7 +7,7 @@ RUN pip install poetry
 COPY pyproject.toml /app/
 
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-dev --no-interaction --no-ansi
+    && poetry install --no-interaction --no-ansi
 
 RUN mkdir -p /app/vectorstore
 
