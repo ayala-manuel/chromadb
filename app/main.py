@@ -33,7 +33,7 @@ class DocumentItem(BaseModel):
 
 @app.get("/")
 def root():
-    return {"message": "ChromaDB API is running 🚀"}
+    return {"message": "ChromaDB API is running."}
 
 @app.post("/collections/create")
 def api_create_collection(payload: CreateCollectionRequest, auth=Depends(verify_api_key)):
