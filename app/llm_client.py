@@ -2,7 +2,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
-load_dotenv("resources/.env")
+load_dotenv("resources/llm/.env")
 API_KEY = os.getenv("OPENAI_API_KEY")
 if API_KEY is None:
     raise RuntimeError("OPENAI_API_KEY is not set. Check resources/.env")
