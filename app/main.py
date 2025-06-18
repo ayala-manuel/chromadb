@@ -35,7 +35,6 @@ class CreateCollectionRequest(BaseModel):
 class DocumentItem(BaseModel):
     documents: List[str]
     metadata: Optional[List[dict]] = None
-    embeddings: Optional[List[List[float]]] = None
 
 @app.get("/")
 def root():

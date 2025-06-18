@@ -55,19 +55,20 @@ def upload_data(collection_name: str, data : dict):
     Example data format:
     {
         "documents": ["Document 1", "Document 2"],
-        "metadata": [{"key": "value"}, {"key": "value"}],
-        "embeddings": [[0.1, 0.2], [0.3, 0.4]]
+        "metadata": [{"key": "value"}, {"key": "value"}]
     }
     Note: The lengths of documents, metadata, and embeddings must match.
     """
-
+    from app.embedding.generator import get_embedding
     try:
         collection = chroma_client.get_collection(name=collection_name)
+        print(f"Collection {collection_name} found.")
 
         documents = data.get("documents", [])
         ids = [str(uuid.uuid4()) for _ in range(len(documents))]
         metadata = data.get("metadata", [{}] * len(documents))
-        embeddings = data.get("embeddings", [[]] * len(documents))
+        embeddings = [get_embedding(doc) for doc in documents]
+        print(f"Embedding {len(embeddings)} documents.")
 
         if not (len(documents) == len(metadata) == len(embeddings)):
             raise ValueError("Documents, metadata, and embeddings must be of the same length.")
