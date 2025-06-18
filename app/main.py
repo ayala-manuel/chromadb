@@ -10,6 +10,7 @@ from app.chroma_client import (
     delete_collection,
     retrieve_information
     )
+from app.llm_client import basic_rag_query
 import os
 
 # Load env
@@ -35,6 +36,10 @@ class CreateCollectionRequest(BaseModel):
 class DocumentItem(BaseModel):
     documents: List[str]
     metadata: Optional[List[dict]] = None
+
+class QueryRequest(BaseModel):
+    query: str
+    collection_name: str
 
 @app.get("/")
 def root():
@@ -74,5 +79,25 @@ def api_retrieve(collection_name: str, query: str):
     try:
         results = retrieve_information(query, collection_name)
         return {"results": results}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/rag_query")
+def api_query(payload: QueryRequest):
+    """Query a specified collection with a given query string.
+    
+    Args:
+        collection_name (str): The name of the collection to query.
+        query (str): The query string to search for in the collection.
+    Returns:
+        dict: A dictionary containing the query results.
+    """
+    try:
+        results = retrieve_information(payload.query, payload.collection_name)
+        if not results:
+            return {"message": "No results found."}
+        
+        response = basic_rag_query(payload.query, results, "test_prompt")
+        return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
