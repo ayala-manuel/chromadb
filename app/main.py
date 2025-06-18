@@ -3,7 +3,13 @@ from fastapi.security.api_key import APIKeyHeader
 from pydantic import BaseModel
 from typing import List, Optional
 from dotenv import load_dotenv
-from app.chroma_client import create_collection, return_collection_names, upload_data, delete_collection
+from app.chroma_client import (
+    create_collection,
+    return_collection_names,
+    upload_data,
+    delete_collection,
+    retrieve_information
+    )
 import os
 
 # Load env
@@ -55,3 +61,19 @@ def api_upload(collection_name: str, data: DocumentItem):
 def api_delete_collection(collection_name: str, auth=Depends(verify_api_key)):
     result = delete_collection(collection_name)
     return {"message": result}
+
+@app.post("/retrieve")
+def api_retrieve(collection_name: str, query: str):
+    """Retrieve information from a specified collection based on a query.
+    
+    Args:
+        collection_name (str): The name of the collection to retrieve data from.
+        query (str): The query string to search for in the collection.
+    Returns:
+        dict: A dictionary containing the retrieved information.
+    """
+    try:
+        results = retrieve_information(query, collection_name)
+        return {"results": results}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

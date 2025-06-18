@@ -83,7 +83,7 @@ def upload_data(collection_name: str, data : dict):
     except Exception as e:
         return f"Collection {collection_name} not found : {str(e)}"
     
-def retrieve_information(embed_query: str, collection_name : str, n_results: int =5):
+def retrieve_information(query: str, collection_name : str, n_results: int =5):
     """
     Retrieve information from the ChromaDB client based on a query.
     
@@ -94,7 +94,8 @@ def retrieve_information(embed_query: str, collection_name : str, n_results: int
     Returns:
         list: A list of documents matching the query.
     """
-
+    from app.embedding.generator import get_embedding
+    embed_query = get_embedding(query)
     collection = chroma_client.get_collection(name=collection_name)
 
     results = collection.query(

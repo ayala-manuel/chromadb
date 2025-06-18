@@ -25,8 +25,13 @@ def get_embedding(text):
     """
     model = load_model()
     try:
-        embedding = model.encode(text, convert_to_tensor=True)
+        embedding = model.encode(
+            text,
+            convert_to_numpy=True
+            )
+        
         return embedding
+    
     except Exception as e:
         print(f"Error embedding text: {e}")
         raise RuntimeError("Failed to embed the text.") from e
