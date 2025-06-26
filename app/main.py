@@ -99,7 +99,7 @@ def api_query(payload: QueryRequest):
         if not results:
             return {"message": "No results found."}
         
-        response = basic_rag_query(payload.query, results, "test_prompt")
+        response = basic_rag_query(payload.query, results, "basic_rag_prompt")
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

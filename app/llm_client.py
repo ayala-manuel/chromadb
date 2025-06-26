@@ -5,7 +5,7 @@ import os
 load_dotenv("resources/llm/.env")
 API_KEY = os.getenv("OPENAI_API_KEY")
 if API_KEY is None:
-    raise RuntimeError("OPENAI_API_KEY is not set. Check resources/.env")
+    raise RuntimeError("OPENAI_API_KEY is not set. Check resources/llm/.env")
 
 client = OpenAI(api_key=API_KEY)
 
