@@ -61,6 +61,7 @@ def upload_data(collection_name: str, data : dict):
     """
     from app.embedding.generator import get_embedding
     try:
+        print(f"Loading data into collection: {collection_name}")
         collection = chroma_client.get_collection(name=collection_name)
         print(f"Collection {collection_name} found.")
 
