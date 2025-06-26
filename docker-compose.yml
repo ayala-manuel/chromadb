@@ -11,4 +11,5 @@ services:
     volumes:
       - ./app:/app/app
       - ./resources:/app/resources
+      - ./vectorstore:/app/vectorstore  # ⬅️ Montaje persistente
     restart: unless-stopped
