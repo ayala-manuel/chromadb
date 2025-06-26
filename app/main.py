@@ -11,6 +11,7 @@ from app.chroma_client import (
     retrieve_information
     )
 from app.llm_client import basic_rag_query
+from app.embedding.generator import get_embedding
 import os
 
 # Load env
@@ -47,7 +48,8 @@ def root():
 
 @app.post("/collections/create")
 def api_create_collection(payload: CreateCollectionRequest, auth=Depends(verify_api_key)):
-    collection = create_collection(payload.name, payload.description)
+    embed_description = get_embedding(payload.description)
+    collection = create_collection(payload.name, embed_description)
     return {"message": f"Collection '{collection.name}' created successfully."}
 
 @app.get("/collections")
