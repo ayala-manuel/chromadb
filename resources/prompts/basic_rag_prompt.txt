@@ -1,0 +1,10 @@
+Usa la información siguiente para responder la pregunta del usuario. 
+Si la respuesta no está en los documentos, di que no sabes o que no se encuentra información suficiente.
+
+Documentos recuperados:
+{RESULTS}
+
+Pregunta del usuario:
+{QUERY}
+
+Respuesta:
