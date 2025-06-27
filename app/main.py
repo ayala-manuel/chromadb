@@ -95,7 +95,7 @@ def api_query(payload: QueryRequest):
         dict: A dictionary containing the query results.
     """
     try:
-        results = retrieve_information(payload.query, payload.collection_name)
+        results = api_retrieve(payload.collection_name, payload.query)
         if not results:
             return {"message": "No results found."}
         
