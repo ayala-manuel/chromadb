@@ -23,23 +23,32 @@ def basic_rag_query(user_query: str, results : list, prompt_type : str) -> str:
 
     with open (f"resources/prompts/{prompt_type}.txt", "r") as file:
         basic_prompt = file.read()
+        clean_response = results["response"]
+        documents = clean_response["documents"]
+        titles = ".\n".join([item["title"] for item in clean_response["metadatas"][0]])
+        dates = ".\n".join([item["date"] for item in clean_response["metadatas"][0]])
+        retrieved_text = f"""
+              Documents: {documents} \n
+            ------------------------------\n
+                Titles: {titles} \n
+            --------------------------\n
+                Dates: {dates}
+              """
 
-    return results
+    system_prompt = basic_prompt.format(
+        RESULTS=retrieved_text,
+        QUERY=user_query
+    )
 
-    # system_prompt = basic_prompt.format(
-    #     RESULTS="\n".join(results),
-    #     QUERY=user_query
-    # )
-
-    # response = client.chat.completions.create(
-    #     model="gpt-4.1-mini",
-    #     messages=[
-    #         {"role": "system", "content": system_prompt}
-    #     ],
-    #     max_tokens=1000
-    # )
+    response = client.chat.completions.create(
+        model="gpt-4.1-mini",
+        messages=[
+            {"role": "system", "content": system_prompt}
+        ],
+        max_tokens=1000
+    )
     
-    # if response.choices:
-    #     return response.choices[0].message.content.strip()
-    # else:
-    #     return "No response from the model."
+    if response.choices:
+        return response.choices[0].message.content.strip()
+    else:
+        return "No response from the model."
