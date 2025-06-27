@@ -101,16 +101,13 @@ def api_query(payload: QueryRequest):
             return {"message": "No results found."}
         clean_response = results["results"]
         documents = clean_response["documents"]
-        titles = ".\n".join([item["title"] for item in clean_response["metadatas"][0]])
-        dates = ".\n".join([item["date"] for item in clean_response["metadatas"][0]])
+        lines = [f"{item['title']} -> {item['date']}" for item in clean_response["metadatas"][0]]
+        titles_dates = "\n".join(lines)
         retrieved_text = f"""
             Documents: {documents} \n
             ------------------------------\n
 
-                Titles: {titles} \n
-            --------------------------\n
-
-                Dates: {dates}
+            Titles and dates: {titles_dates} \n
             """
         
         response = basic_rag_query(payload.query, results, "basic_rag_prompt")
