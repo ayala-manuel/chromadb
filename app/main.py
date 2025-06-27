@@ -96,6 +96,7 @@ def api_query(payload: QueryRequest):
     """
     try:
         results = api_retrieve(payload.collection_name, payload.query)
+        return results
         if not results:
             return {"message": "No results found."}
         
