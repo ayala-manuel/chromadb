@@ -100,7 +100,7 @@ def api_query(payload: QueryRequest):
         if not results:
             return {"message": "No results found."}
         # clean_response = results["response"]
-        return {"response": results.json()["response"]}
+        return {"response": results.get("response", "No response found.")}
         documents = clean_response["documents"]
         titles = ".\n".join([item["title"] for item in clean_response["metadatas"][0]])
         dates = ".\n".join([item["date"] for item in clean_response["metadatas"][0]])
