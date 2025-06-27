@@ -96,9 +96,20 @@ def api_query(payload: QueryRequest):
     """
     try:
         results = api_retrieve(payload.collection_name, payload.query)
-        return results
         if not results:
             return {"message": "No results found."}
+        clean_response = results["response"]
+        documents = clean_response["documents"]
+        titles = ".\n".join([item["title"] for item in clean_response["metadatas"][0]])
+        dates = ".\n".join([item["date"] for item in clean_response["metadatas"][0]])
+        retrieved_text = f"""
+            Documents: {documents} \n
+            ------------------------------\n
+                Titles: {titles} \n
+            --------------------------\n
+                Dates: {dates}
+            """
+        return {"retrieved_text": retrieved_text}
         
         response = basic_rag_query(payload.query, results, "basic_rag_prompt")
         return {"response": response}
