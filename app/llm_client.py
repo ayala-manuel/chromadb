@@ -1,5 +1,6 @@
 from openai import OpenAI
 from dotenv import load_dotenv
+import json
 import os
 
 load_dotenv("resources/llm/.env")
@@ -23,7 +24,7 @@ def basic_rag_query(user_query: str, results : list, prompt_type : str) -> str:
     with open (f"resources/prompts/{prompt_type}.txt", "r") as file:
         basic_prompt = file.read()
 
-    return results
+    return results.json()["response"]["documents"]
 
     # system_prompt = basic_prompt.format(
     #     RESULTS="\n".join(results),
