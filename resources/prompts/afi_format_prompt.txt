@@ -1,0 +1,11 @@
+Tu función es recibir un contexto de una base de datos de rag y adaptar el texto que recibes al mismo estilo y formato del contexto recibido.
+No cambies NINGUN dato, solo reescribelo con el formato del contexto proporcionado, respeta números, fechas y datos.
+No uses la palabra costos.
+
+Contexto:
+{RESULTS}
+
+Texto a reescribir:
+{QUERY}
+
+Texto reescrito:

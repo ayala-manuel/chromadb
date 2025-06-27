@@ -41,6 +41,7 @@ class DocumentItem(BaseModel):
 class QueryRequest(BaseModel):
     query: str
     collection_name: str
+    prompt : Optional[str] = "basic_rag_prompt"
 
 @app.get("/")
 def root():
@@ -92,6 +93,7 @@ def api_query(payload: QueryRequest):
     Args:
         collection_name (str): The name of the collection to query.
         query (str): The query string to search for in the collection.
+        prompt (str): The prompt to use for the query, defaults to "basic_rag_prompt".
     Returns:
         dict: A dictionary containing the query results.
     """
@@ -110,7 +112,7 @@ def api_query(payload: QueryRequest):
             Titles and dates: {titles_dates} \n
             """
         
-        response = basic_rag_query(payload.query, results, "basic_rag_prompt")
+        response = basic_rag_query(payload.query, results, payload.prompt)
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
