@@ -99,9 +99,13 @@ def api_query(payload: QueryRequest):
         if not results:
             return {"message": "No results found."}
         clean_response = results["response"]
+        print("Clean response:", clean_response)
         documents = clean_response["documents"]
+        print("Documents:", documents)
         titles = ".\n".join([item["title"] for item in clean_response["metadatas"][0]])
+        print("Titles:", titles)
         dates = ".\n".join([item["date"] for item in clean_response["metadatas"][0]])
+        print("Dates:", dates)
         retrieved_text = f"""
             Documents: {documents} \n
             ------------------------------\n
