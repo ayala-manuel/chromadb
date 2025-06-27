@@ -106,11 +106,12 @@ def api_query(payload: QueryRequest):
         retrieved_text = f"""
             Documents: {documents} \n
             ------------------------------\n
+
                 Titles: {titles} \n
             --------------------------\n
+
                 Dates: {dates}
             """
-        return {"retrieved_text": retrieved_text}
         
         response = basic_rag_query(payload.query, results, "basic_rag_prompt")
         return {"response": response}
