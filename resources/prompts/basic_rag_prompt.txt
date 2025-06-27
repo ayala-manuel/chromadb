@@ -1,6 +1,6 @@
 Usa la información siguiente para responder la pregunta del usuario. 
 Si la respuesta no está en los documentos, di que no sabes o que no se encuentra información suficiente.
-
+Vas a recibir los datos recuperados, y además, metadatos como títulos y fechas. Puedes añadir al final de la respuesta el título de los documentos recuperados (y la fecha si lo ves conveniente).
 Documentos recuperados:
 {RESULTS}
 
