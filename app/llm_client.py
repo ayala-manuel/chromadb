@@ -23,20 +23,22 @@ def basic_rag_query(user_query: str, results : list, prompt_type : str) -> str:
     with open (f"resources/prompts/{prompt_type}.txt", "r") as file:
         basic_prompt = file.read()
 
-    system_prompt = basic_prompt.format(
-        RESULTS="\n".join(results),
-        QUERY=user_query
-    )
+    return results
 
-    response = client.chat.completions.create(
-        model="gpt-4.1-mini",
-        messages=[
-            {"role": "system", "content": system_prompt}
-        ],
-        max_tokens=1000
-    )
+    # system_prompt = basic_prompt.format(
+    #     RESULTS="\n".join(results),
+    #     QUERY=user_query
+    # )
+
+    # response = client.chat.completions.create(
+    #     model="gpt-4.1-mini",
+    #     messages=[
+    #         {"role": "system", "content": system_prompt}
+    #     ],
+    #     max_tokens=1000
+    # )
     
-    if response.choices:
-        return response.choices[0].message.content.strip()
-    else:
-        return "No response from the model."
+    # if response.choices:
+    #     return response.choices[0].message.content.strip()
+    # else:
+    #     return "No response from the model."
