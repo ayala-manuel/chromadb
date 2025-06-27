@@ -48,8 +48,8 @@ def root():
 
 @app.post("/collections/create")
 def api_create_collection(payload: CreateCollectionRequest, auth=Depends(verify_api_key)):
-    embed_description = get_embedding(payload.description)
-    collection = create_collection(payload.name, embed_description)
+    collection = create_collection(payload.name, payload.description)
+    # TODO: Add database of collections for searching better one
     return {"message": f"Collection '{collection.name}' created successfully."}
 
 @app.get("/collections")
