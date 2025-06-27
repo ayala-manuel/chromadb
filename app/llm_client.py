@@ -24,21 +24,8 @@ def basic_rag_query(user_query: str, results : list, prompt_type : str) -> str:
     with open (f"resources/prompts/{prompt_type}.txt", "r") as file:
         basic_prompt = file.read()
 
-    clean_response = results["response"]
-    documents = clean_response["documents"]
-    titles = ".\n".join([item["title"] for item in clean_response["metadatas"][0]])
-    dates = ".\n".join([item["date"] for item in clean_response["metadatas"][0]])
-    retrieved_text = f"""
-          Documents: {documents} \n
-        ------------------------------\n
-            Titles: {titles} \n
-        --------------------------\n
-            Dates: {dates}
-          """
-    return retrieved_text
-
     system_prompt = basic_prompt.format(
-        RESULTS=retrieved_text,
+        RESULTS=results,
         QUERY=user_query
     )
 
