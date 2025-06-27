@@ -86,6 +86,7 @@ def api_retrieve(collection_name: str, query: str):
 
 @app.post("/rag_query")
 def api_query(payload: QueryRequest):
+    import json
     """Query a specified collection with a given query string.
     
     Args:
@@ -99,7 +100,7 @@ def api_query(payload: QueryRequest):
         if not results:
             return {"message": "No results found."}
         # clean_response = results["response"]
-        return {"response": results}
+        return {"response": results.json()["response"]}
         documents = clean_response["documents"]
         titles = ".\n".join([item["title"] for item in clean_response["metadatas"][0]])
         dates = ".\n".join([item["date"] for item in clean_response["metadatas"][0]])
