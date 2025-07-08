@@ -45,6 +45,7 @@ class QueryRequest(BaseModel):
 
 class RetrieveRequest(BaseModel):
     collection_name: str
+    query : str
 
 @app.get("/")
 def root():
