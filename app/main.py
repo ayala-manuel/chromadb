@@ -43,6 +43,9 @@ class QueryRequest(BaseModel):
     collection_name: str
     prompt : Optional[str] = "basic_rag_prompt"
 
+class RetrieveRequest(BaseModel):
+    collection_name: str
+
 @app.get("/")
 def root():
     return {"message": "ChromaDB se encuentra corriendo adecuadamente."}
@@ -70,17 +73,9 @@ def api_delete_collection(collection_name: str, auth=Depends(verify_api_key)):
     return {"message": result}
 
 @app.post("/retrieve")
-def api_retrieve(collection_name: str, query: str):
-    """Retrieve information from a specified collection based on a query.
-    
-    Args:
-        collection_name (str): The name of the collection to retrieve data from.
-        query (str): The query string to search for in the collection.
-    Returns:
-        dict: A dictionary containing the retrieved information.
-    """
+def api_retrieve(req: RetrieveRequest):
     try:
-        results = retrieve_information(query, collection_name)
+        results = retrieve_information(req.query, req.collection_name)
         return {"results": results}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
